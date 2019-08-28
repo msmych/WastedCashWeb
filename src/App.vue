@@ -24,14 +24,19 @@ export default {
   computed: {
     apiToken() {
       return this.$route.query.apiToken;
+    },
+    userId() {
+      return this.$route.query.userId;
     }
   },
   created() {
     const apiToken = this.$route.query.apiToken;
-    if (apiToken) {
+    const userId = this.$route.query.userId;
+    if (apiToken && userId) {
       this.$store.commit({
         type: 'setApiToken',
-        apiToken: apiToken
+        apiToken: apiToken,
+        userId: userId
       });
     }
   }
