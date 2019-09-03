@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1>{{ userTotals }}</h1>
+    <div v-for="userTotal in userTotals">
+      <h3>{{ userTotal.amount }} {{ userTotal.currency }}</h3>
+    </div>
   </div>
 </template>
 
