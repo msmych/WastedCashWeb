@@ -7,17 +7,17 @@
     <label for="month">All</label>
     <div v-for="userTotal in userTotals">
       <h3>{{ userTotal.amount }} {{ userTotal.currency }}</h3>
-      <div>
-        <label>
-          New expense:
-          <input type="number" placeholder="Amount" v-model="amount">
-        </label>
-        <button
-          :disabled="amount < 1"
-          @click="createExpense(userTotal.currency)"
-        >Add
-        </button>
-      </div>
+    </div>
+    <div>
+      <label>
+        New expense:
+        <input v-model="amount" type="number" step="0.01" placeholder="Amount">
+      </label>
+      <button
+        :disabled="amount < 1"
+        @click="createExpense(userTotal.currency)"
+      >Add
+      </button>
     </div>
   </div>
 </template>
@@ -60,7 +60,7 @@
         axios.post("/expense", {
           userId: this.userId,
           groupId: this.userId,
-          amount: this.amount,
+          amount: this.amount * 100,
           currency: currency
         }, this.axiosConfig)
           .then(() => this.updateTotals())

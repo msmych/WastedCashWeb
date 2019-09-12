@@ -64,6 +64,21 @@
     font-weight: normal;
   }
 
+  button {
+    color: lightgray;
+    background-color: black;
+  }
+
+  input {
+    color: lightgray;
+    background-color: black;
+    border-color: lightgray;
+  }
+
+  input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
   #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
