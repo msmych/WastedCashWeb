@@ -3,6 +3,13 @@ export const mutations = {
     state.apiToken = payload.apiToken;
     state.user.id = payload.userId;
   },
+  setUserCurrencies(state, currencies) {
+    const currenciesObj = {};
+    for (let i = 0; i < currencies.length; i++) {
+      currenciesObj[currencies[i]] = i;
+    }
+    state.user.currencies = currenciesObj;
+  },
   setUserTotal(state, totals) {
     const userTotals = {};
     totals.forEach(total => {

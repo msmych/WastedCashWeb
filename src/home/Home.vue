@@ -5,19 +5,23 @@
     <label for="month">Month</label>
     <input type="radio" id="all" value="ALL" v-model="type">
     <label for="month">All</label>
-    <div v-for="userTotal in userTotals">
-      <h3>{{ userTotal.amount }} {{ userTotal.currency }}</h3>
-    </div>
+    <h3 v-for="userTotal in userTotals">
+      {{ userTotal.amount }} {{ userTotal.currency }}
+    </h3>
     <div>
       <label>
         New expense:
         <input v-model="amount" type="number" step="0.01" placeholder="Amount">
+        <select v-model="currency">
+          <option v-for="userCurrency in userCurrencies"
+                  :value="userCurrency"
+          >{{ userCurrency }}</option>
+        </select>
       </label>
       <button
         :disabled="amount < 1"
-        @click="createExpense(userTotal.currency)"
-      >Add
-      </button>
+        @click="createExpense"
+      >Add</button>
     </div>
   </div>
 </template>
@@ -30,13 +34,15 @@
     data() {
       return {
         type: "MONTH",
-        amount: 0
+        amount: 0,
+        currency: "USD"
       }
     },
     computed: {
       ...mapGetters({
         apiToken: 'apiToken',
         userId: 'userId',
+        userCurrencies: 'userCurrencies',
         userTotals: 'userTotals'
       }),
       axiosConfig() {
@@ -49,19 +55,24 @@
       }
     },
     mounted() {
+      this.updateCurrencies();
       this.updateTotals()
     },
     methods: {
+      updateCurrencies() {
+        axios.get(`/user/${this.userId}/currencies`, this.axiosConfig)
+          .then(currencies => this.$store.commit('setUserCurrencies', currencies.data))
+      },
       updateTotals() {
         axios.get(`/total/in/${this.userId}/type/${this.type}`, this.axiosConfig)
           .then(totals => this.$store.commit('setUserTotal', totals.data))
       },
-      createExpense(currency) {
+      createExpense() {
         axios.post("/expense", {
           userId: this.userId,
           groupId: this.userId,
           amount: this.amount * 100,
-          currency: currency
+          currency: this.currency
         }, this.axiosConfig)
           .then(() => this.updateTotals())
           .then(() => this.amount = 0)

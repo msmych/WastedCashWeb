@@ -67,16 +67,27 @@
   button {
     color: lightgray;
     background-color: black;
+    border: 1px solid darkcyan;
+  }
+
+  button:disabled {
+    border-color: lightgray;
   }
 
   input {
     color: lightgray;
     background-color: black;
-    border-color: lightgray;
+    border: 1px dotted lightgray;
   }
 
   input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
+  }
+
+  select {
+    color: lightgray;
+    background-color: black;
+    border-style: none;
   }
 
   #app {
