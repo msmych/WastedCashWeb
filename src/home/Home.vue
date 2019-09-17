@@ -17,6 +17,8 @@
                   :value="userCurrency"
           >{{ userCurrency }}</option>
         </select>
+        <app-expense-category-picker @categorySelected="category = $event">
+        </app-expense-category-picker>
       </label>
       <button
         :disabled="amount < 1"
@@ -29,13 +31,16 @@
 <script>
   import {mapGetters} from 'vuex'
   import axios from 'axios';
+  import AppExpenseCategoryPicker from "./expense/ExpenseCategoryPicker";
 
   export default {
+    components: {AppExpenseCategoryPicker},
     data() {
       return {
         type: "MONTH",
         amount: 0,
-        currency: "USD"
+        currency: "USD",
+        category: undefined
       }
     },
     computed: {
@@ -72,7 +77,8 @@
           userId: this.userId,
           groupId: this.userId,
           amount: this.amount * 100,
-          currency: this.currency
+          currency: this.currency,
+          category: this.category
         }, this.axiosConfig)
           .then(() => this.updateTotals())
           .then(() => this.amount = 0)
