@@ -1,10 +1,10 @@
 <template>
   <div>
     <h3>My total</h3>
-    <input type="radio" id="month" value="MONTH" v-model="type">
+    <input type="radio" id="month" value="MONTH" v-model="type" @change="updateTotals">
     <label for="month">Month</label>
-    <input type="radio" id="all" value="ALL" v-model="type">
-    <label for="month">All</label>
+    <input type="radio" id="all" value="ALL" v-model="type" @change="updateTotals">
+    <label for="all">All</label>
     <h3 v-for="userTotal in userTotals">
       {{ userTotal.amount }} {{ userTotal.currency }}
     </h3>
