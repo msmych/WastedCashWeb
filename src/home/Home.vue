@@ -24,6 +24,7 @@
         :disabled="amount < 1"
         @click="createExpense"
       >Add</button>
+      <app-expenses></app-expenses>
     </div>
   </div>
 </template>
@@ -31,10 +32,11 @@
 <script>
   import {mapGetters} from 'vuex'
   import axios from 'axios';
-  import AppExpenseCategoryPicker from "./expense/ExpenseCategoryPicker";
+  import AppExpenseCategoryPicker from "../expense/ExpenseCategoryPicker";
+  import AppExpenses from "../expense/Expenses";
 
   export default {
-    components: {AppExpenseCategoryPicker},
+    components: {AppExpenses, AppExpenseCategoryPicker},
     data() {
       return {
         type: "MONTH",
@@ -45,19 +47,11 @@
     },
     computed: {
       ...mapGetters({
-        apiToken: 'apiToken',
         userId: 'userId',
+        axiosConfig: 'axiosConfig',
         userCurrencies: 'userCurrencies',
         userTotals: 'userTotals'
-      }),
-      axiosConfig() {
-        return {
-          headers: {
-            'user-id': this.userId,
-            'api-token': this.apiToken
-          }
-        }
-      }
+      })
     },
     mounted() {
       this.updateCurrencies();

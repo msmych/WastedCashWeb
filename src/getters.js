@@ -5,6 +5,14 @@ export const getters = {
   userId(state) {
     return state.user.id;
   },
+  axiosConfig(state) {
+    return {
+      headers: {
+        'user-id': state.user.id,
+        'api-token': state.apiToken
+      }
+    }
+  },
   userCurrencies(state) {
     return Object.keys(state.user.currencies)
   },
