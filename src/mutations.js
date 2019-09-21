@@ -10,7 +10,7 @@ export const mutations = {
     }
     state.user.currencies = currenciesObj;
   },
-  setUserTotal(state, totals) {
+  setUserTotals(state, totals) {
     const userTotals = {};
     totals.forEach(total => {
       if (userTotals[total.currency]) {

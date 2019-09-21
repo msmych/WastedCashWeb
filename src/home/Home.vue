@@ -1,81 +1,25 @@
 <template>
   <div>
-    <h3>My total</h3>
-    <input type="radio" id="month" value="MONTH" v-model="type" @change="updateTotals">
-    <label for="month">Month</label>
-    <input type="radio" id="all" value="ALL" v-model="type" @change="updateTotals">
-    <label for="all">All</label>
-    <h3 v-for="userTotal in userTotals">
-      {{ userTotal.amount }} {{ userTotal.currency }}
-    </h3>
-    <div>
-      <label>
-        New expense:
-        <input v-model="amount" type="number" step="0.01" placeholder="Amount">
-        <select v-model="currency">
-          <option v-for="userCurrency in userCurrencies"
-                  :value="userCurrency"
-          >{{ userCurrency }}</option>
-        </select>
-        <app-expense-category-picker @categorySelected="category = $event">
-        </app-expense-category-picker>
-      </label>
-      <button
-        :disabled="amount < 1"
-        @click="createExpense"
-      >Add</button>
-      <app-expenses></app-expenses>
-    </div>
+    <app-totals ref="totals"></app-totals>
+    <app-new-expense @created="onNewExpense"></app-new-expense>
+    <app-expenses ref="expenses" @expenseDeleted="updateTotals"></app-expenses>
   </div>
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import axios from 'axios';
-  import AppExpenseCategoryPicker from "../expense/ExpenseCategoryPicker";
-  import AppExpenses from "../expense/Expenses";
+  import AppExpenses from "../expense/Expenses"
+  import AppNewExpense from "../expense/NewExpense"
+  import AppTotals from "../total/Totals";
 
   export default {
-    components: {AppExpenses, AppExpenseCategoryPicker},
-    data() {
-      return {
-        type: "MONTH",
-        amount: 0,
-        currency: "USD",
-        category: undefined
-      }
-    },
-    computed: {
-      ...mapGetters({
-        userId: 'userId',
-        axiosConfig: 'axiosConfig',
-        userCurrencies: 'userCurrencies',
-        userTotals: 'userTotals'
-      })
-    },
-    mounted() {
-      this.updateCurrencies();
-      this.updateTotals()
-    },
+    components: {AppTotals, AppExpenses, AppNewExpense},
     methods: {
-      updateCurrencies() {
-        axios.get(`/user/${this.userId}/currencies`, this.axiosConfig)
-          .then(currencies => this.$store.commit('setUserCurrencies', currencies.data))
+      onNewExpense() {
+        this.updateTotals();
+        this.$refs.expenses.loadExpenses()
       },
       updateTotals() {
-        axios.get(`/total/in/${this.userId}/type/${this.type}`, this.axiosConfig)
-          .then(totals => this.$store.commit('setUserTotal', totals.data))
-      },
-      createExpense() {
-        axios.post("/expense", {
-          userId: this.userId,
-          groupId: this.userId,
-          amount: this.amount * 100,
-          currency: this.currency,
-          category: this.category
-        }, this.axiosConfig)
-          .then(() => this.updateTotals())
-          .then(() => this.amount = 0)
+        this.$refs.totals.updateTotals()
       }
     }
   }

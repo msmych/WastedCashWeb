@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ expense.date }} {{ expense.amount }} {{ expense.currency }}
+    {{ expense.amount | amount }} {{ expense.currency }} {{ expense.date | simpleDate }}
     <button @click="removeExpense">❌</button>
   </div>
 </template>

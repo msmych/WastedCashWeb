@@ -20,7 +20,7 @@ export const getters = {
     const totals = [];
     Object.keys(state.user.totals).forEach(currency => {
       totals.push({
-        amount: state.user.totals[currency] / 100,
+        amount: state.user.totals[currency],
         currency: currency
       });
     });

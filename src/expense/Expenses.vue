@@ -1,8 +1,9 @@
 <template>
   <div>
+    <h3>Last expenses</h3>
     <div v-for="expense in expenses">
       <app-expense :expense="expense"
-                   @deleted="loadExpenses"
+                   @deleted="onExpenseDeleted"
       ></app-expense>
     </div>
   </div>
@@ -31,8 +32,12 @@
       this.loadExpenses()
     },
     methods: {
+      onExpenseDeleted() {
+        this.loadExpenses();
+        this.$emit('expenseDeleted')
+      },
       loadExpenses() {
-        axios.get(`/expenses/by/${this.userId}`, this.axiosConfig)
+        axios.get(`/expenses/last/by/${this.userId}`, this.axiosConfig)
           .then(response => {
             const expenses = [];
             let data = response.data;

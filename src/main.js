@@ -21,3 +21,6 @@ new Vue({
   store,
   render: h => h(App)
 });
+
+Vue.filter('amount', amount => `${~~(amount / 100)}.${amount % 100}`);
+Vue.filter('simpleDate', date => new Date(date).toLocaleDateString('en-US'));
