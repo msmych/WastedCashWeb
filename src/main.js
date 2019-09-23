@@ -1,14 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
-import Home from './home/Home'
-import { store } from './store'
+import {store} from './js/store'
+import {routes} from './js/routes'
 
 Vue.use(VueRouter);
-
-const routes = [
-  {path: '/', component: Home}
-];
 
 const router = new VueRouter({
   routes,

@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <h1>{{ title }}</h1>
-    <div v-if="apiToken">
+    <div v-if="apiTokenPresent">
+      <app-navigation></app-navigation>
       <router-view></router-view>
     </div>
     <div v-else>
@@ -11,22 +12,24 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   import Auth from "./auth/Auth";
+  import AppNavigation from "./navigation/Navigation";
 
   export default {
     name: 'app',
-    components: {Auth},
+    components: {AppNavigation, Auth},
     data() {
       return {
         title: 'Wasted cash'
       }
     },
     computed: {
-      apiToken() {
-        return this.$route.query.apiToken;
-      },
-      userId() {
-        return this.$route.query.userId;
+      ...mapGetters({
+        apiToken: 'apiToken'
+      }),
+      apiTokenPresent() {
+        return this.$route.query.apiToken || this.apiToken;
       }
     },
     created() {
@@ -44,51 +47,7 @@
 </script>
 
 <style lang="scss">
-  body {
-    font-family: Ubuntu, sans-serif;
-    color: lightgrey;
-    background-color: black;
-  }
-
-  a {
-    color: darkcyan;
-    text-decoration: none;
-  }
-
-  code {
-    font-family: "Ubuntu Mono", sans-serif;
-    color: darkcyan;
-  }
-
-  h1, h2, h3 {
-    font-weight: normal;
-  }
-
-  button {
-    color: lightgray;
-    background-color: black;
-    border: 1px solid darkcyan;
-  }
-
-  button:disabled {
-    border-color: lightgray;
-  }
-
-  input {
-    color: lightgray;
-    background-color: black;
-    border: 1px dotted lightgray;
-  }
-
-  input[type=number]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
-
-  select {
-    color: lightgray;
-    background-color: black;
-    border-style: none;
-  }
+  @import "scss/style";
 
   #app {
     -webkit-font-smoothing: antialiased;

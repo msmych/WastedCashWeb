@@ -1,0 +1,45 @@
+body {
+  font-family: Ubuntu, sans-serif;
+  color: lightgrey;
+  background-color: black;
+}
+
+a {
+  color: darkcyan;
+  text-decoration: none;
+}
+
+code {
+  font-family: "Ubuntu Mono", sans-serif;
+  color: darkcyan;
+}
+
+h1, h2, h3 {
+  font-weight: normal;
+}
+
+button {
+  color: lightgray;
+  background-color: black;
+  border: 1px solid darkcyan;
+}
+
+button:disabled {
+  border-color: lightgray;
+}
+
+input {
+  color: lightgray;
+  background-color: black;
+  border: 1px dotted lightgray;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+select {
+  color: lightgray;
+  background-color: black;
+  border-style: none;
+}

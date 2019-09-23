@@ -56,11 +56,7 @@
           currency: this.currency,
           category: this.category
         }, this.axiosConfig)
-          .then(() => this.onExpenseCreated())
           .then(() => this.amount = 0)
-      },
-      onExpenseCreated() {
-        this.$emit('created')
       }
     }
   }
